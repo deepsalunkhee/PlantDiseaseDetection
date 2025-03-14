@@ -9,6 +9,9 @@ const app = express();
 app.use(cors());
 app.use(express.json({ limit: "10mb" })); // Allow large JSON payloads
 
+
+async function startserver(){
+
 // 🔹 Load ONNX model
 const MODEL_PATH = path.join("plant-disease-model-complete.onnx");
 let session;
@@ -100,3 +103,7 @@ app.post("/predict", async (req, res) => {
 
 // 🔹 Start Server
 app.listen(3001, () => console.log("✅ Express server running on port 3001"));
+
+}
+
+startserver();
