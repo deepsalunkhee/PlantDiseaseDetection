@@ -23,37 +23,37 @@ function App() {
     const [file, setFile] = useState(null);
     const [preview, setPreview] = useState(null);
     const [prediction, setPrediction] = useState("");
+    const [loading, setLoading] = useState(false);
 
-    // Handle file selection and generate preview
     const handleFileChange = (event) => {
-        setPrediction(""); 
+        setPrediction("");
         const imageFile = event.target.files[0];
         if (imageFile) {
             const reader = new FileReader();
             reader.readAsDataURL(imageFile);
             reader.onloadend = () => {
                 setFile(reader.result);
-                setPreview(reader.result); // Set preview image
+                setPreview(reader.result);
             };
         }
     };
 
-    // Send image to Express backend
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (!file) return;
 
+        setLoading(true); // Start loader
         try {
-            const response = await axios.post("http://localhost:3001/predict", { image: file });
+            const response = await axios.post("https://plantdiseasedetection-m3ar.onrender.com/predict", { image: file });
             setPrediction(response.data.prediction);
         } catch (error) {
             console.error("Error:", error);
         }
+        setLoading(false); // Stop loader
     };
 
     return (
         <div className="container">
-            {/* Left Side - Upload & Prediction */}
             <div className="left-section">
                 <h1 className="heading">Plant Disease Detection</h1>
                 <h2>🌿 Upload Plant Image</h2>
@@ -62,18 +62,19 @@ function App() {
                         {preview ? <img src={preview} alt="Uploaded Preview" className="preview-img" /> : "Image Preview"}
                     </div>
                     <input type="file" accept="image/*" onChange={handleFileChange} required />
-                    <button type="submit">Predict</button>
+                    <button type="submit" disabled={loading}>
+                        {loading ? "Predicting..." : "Predict"}
+                    </button>
                 </form>
+                {loading && <p>🔄 Processing...</p>}
                 {prediction && <h2 className="prediction">Prediction: {prediction}</h2>}
             </div>
 
-            {/* Right Side - Disease Information */}
             <div className="right-section">
                 <h2>📝 Predictable Diseases</h2>
                 <div className="scrollable-tables">
                     {Object.entries(diseaseData).map(([plant, diseases]) => (
                         <div key={plant} className="plant-table">
-                            
                             <table>
                                 <thead>
                                     <tr>

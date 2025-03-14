@@ -65,6 +65,10 @@ const CLASS_NAMES = [
     "Corn_(maize)___healthy"
 ];
 
+app.get("/", (req, res) => {
+    res.send("✅ Plant Disease Prediction API");
+});
+
 // 🔹 Handle Image Prediction
 app.post("/predict", async (req, res) => {
     try {
