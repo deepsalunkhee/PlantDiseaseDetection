@@ -1,0 +1,136 @@
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f8ff; /* Light Blue */
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+/* Main Container - Divides Screen in Two Parts */
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.heading{
+  background: #007acc;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Left Section (Upload & Prediction) */
+.left-section {
+  flex: 1;
+  padding: 20px;
+  text-align: center;
+  background: white;
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Image Upload */
+.image-placeholder {
+  width: 300px;
+  height: 300px;
+  background-color: #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #007acc;
+  color: gray;
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+.preview-img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 5px;
+}
+
+/* File Input */
+input[type="file"] {
+  padding: 10px;
+  border: 1px solid #007acc;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #007acc;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 5px;
+}
+
+button:hover {
+  background-color: #005f99;
+}
+
+/* Prediction Result */
+.prediction {
+  margin-top: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #007acc;
+}
+
+/* Right Section (Disease Info) */
+.right-section {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background-color: #e6f7ff; /* Light Blue */
+}
+
+/* Scrollable Tables */
+.scrollable-tables {
+  max-height: 80vh;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+/* Individual Plant Tables */
+.plant-table {
+  margin-bottom: 20px;
+}
+
+h3 {
+  background: #007acc;
+  color: white;
+  padding: 8px;
+  border-radius: 5px;
+}
+
+/* Table Styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 5px;
+}
+
+th, td {
+  border: 1px solid #007acc;
+  padding: 10px;
+}
+
+th {
+  background-color: #007acc;
+  color: white;
+}
+
+tr:nth-child(even) {
+  background-color: #e6f7ff;
+}
