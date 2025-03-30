@@ -16,7 +16,7 @@ The model is trained on the PlantVillage dataset, which includes approximately 8
 ## Model Architecture 🏗️
 
 The implementation uses a custom ResNet-9 architecture with residual connections:
-
+![Architecture](https://www.mdpi.com/remotesensing/remotesensing-11-01896/article_deploy/html/images/remotesensing-11-01896-g001.png)
 ### Key Components
 
 1. **Convolutional Blocks**: Each block consists of:
