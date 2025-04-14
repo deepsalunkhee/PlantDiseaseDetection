@@ -29,28 +29,39 @@ function App() {
         setPrediction("");
         const imageFile = event.target.files[0];
         if (imageFile) {
+            setFile(imageFile); // ✅ Keep this as a real File object
+    
             const reader = new FileReader();
             reader.readAsDataURL(imageFile);
             reader.onloadend = () => {
-                setFile(reader.result);
-                setPreview(reader.result);
+                setPreview(reader.result); // ✅ Only preview gets base64
             };
         }
     };
+    
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (!file) return;
-
+    
         setLoading(true); // Start loader
         try {
-            const response = await axios.post("https://plantdiseasedetection-m3ar.onrender.com/predict", { image: file });
+            const formData = new FormData();
+            formData.append("file", file); // ⬅️ Use the key 'file', not 'image'
+    
+            const response = await axios.post("http://127.0.0.1:8000/predict", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+    
             setPrediction(response.data.prediction);
         } catch (error) {
             console.error("Error:", error);
         }
         setLoading(false); // Stop loader
     };
+    
 
     return (
         <div className="container">

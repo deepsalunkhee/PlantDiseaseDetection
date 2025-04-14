@@ -3,7 +3,7 @@ import torchvision.transforms as transforms
 import onnx
 import torch.nn as nn
 
-# ✅ Define the base class for classification
+# Define the base class for classification
 class ImageClassificationBase(nn.Module):
     def training_step(self, batch):
         images, labels = batch
@@ -33,7 +33,7 @@ class ImageClassificationBase(nn.Module):
         _, preds = torch.max(outputs, dim=1)
         return torch.tensor(torch.sum(preds == labels).item() / len(preds))
 
-# ✅ Define ConvBlock function
+# Define ConvBlock function
 def ConvBlock(in_channels, out_channels, pool=False):
     layers = [nn.Conv2d(in_channels, out_channels, kernel_size=3, padding=1),
               nn.BatchNorm2d(out_channels),
@@ -42,7 +42,7 @@ def ConvBlock(in_channels, out_channels, pool=False):
         layers.append(nn.MaxPool2d(4))
     return nn.Sequential(*layers)
 
-# ✅ Define ResNet9 class
+# Define ResNet9 class
 class ResNet9(ImageClassificationBase):
     def __init__(self, in_channels, num_diseases):
         super().__init__()
@@ -71,14 +71,27 @@ class ResNet9(ImageClassificationBase):
         out = self.classifier(out)
         return out
 
-# ✅ Load your trained PyTorch model
+# Add necessary classes to safe globals
+torch.serialization.add_safe_globals([
+    ResNet9, 
+    nn.Sequential,
+    nn.Conv2d,
+    nn.BatchNorm2d, 
+    nn.ReLU,
+    nn.MaxPool2d,
+    nn.Flatten,
+    nn.Linear,
+    ImageClassificationBase
+])
+
+# Load the entire model
 MODEL_PATH = r"D:\Personal-Projects-2.0\PlantDiseasePrediction\models\plant-disease-model-complete.pth"
-model = torch.load(MODEL_PATH, map_location=torch.device("cpu"),weights_only=False)
+model = torch.load(MODEL_PATH, map_location=torch.device("cpu"))
 model.eval()
 
-# ✅ Convert to ONNX format
+# Convert to ONNX format
 dummy_input = torch.randn(1, 3, 256, 256)  # Simulated image input
-onnx_path = r"D:\Personal-Projects-2.0\PlantDiseasePrediction\models\plant-disease-model-complete.onnx"
+onnx_path = r"D:\Personal-Projects-2.0\PlantDiseasePrediction\models\plant-disease-model-complete-1.onnx"
 
 torch.onnx.export(model, dummy_input, onnx_path, input_names=["input"], output_names=["output"])
 
