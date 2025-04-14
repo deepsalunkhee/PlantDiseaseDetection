@@ -49,7 +49,7 @@ function App() {
             const formData = new FormData();
             formData.append("file", file); // ⬅️ Use the key 'file', not 'image'
     
-            const response = await axios.post("http://127.0.0.1:8000/predict", formData, {
+            const response = await axios.post("https://plantdiseasedetectionserver.onrender.com/predict", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
